@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 const cluster = require('cluster');
 import { cpus } from 'os';
 import { Injectable, Logger } from '@nestjs/common';
@@ -5,7 +6,11 @@ import { Injectable, Logger } from '@nestjs/common';
 const numCPUs = cpus().length;
 @Injectable()
 export class AppClusterService {
-  static clusterize(callback: Function): void {
+  static clusterize(
+    initWorker: number,
+    // eslint-disable-next-line
+    callback: Function,
+  ): void {
     if (cluster.isPrimary) {
       Logger.log(`Master server started on ${process.pid}`);
       //ensure workers exit cleanly
@@ -17,7 +22,8 @@ export class AppClusterService {
         // exit the master process
         process.exit(0);
       });
-      for (let i = 0; i < numCPUs; i++) {
+      initWorker = initWorker < numCPUs ? initWorker : numCPUs;
+      for (let i = 0; i < initWorker; i++) {
         cluster.fork();
       }
       cluster.on('online', function (worker) {

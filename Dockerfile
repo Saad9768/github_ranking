@@ -13,6 +13,9 @@ RUN npm ci
 # Bundle app source
 COPY . .
 
+#Run linting
+RUN npm run lint
+
 #Run all the test cases
 RUN npm test
 

@@ -13,4 +13,7 @@ async function bootstrap() {
   app.useGlobalFilters(new UnHandledException());
   await app.listen(process.env.PORT || 3000);
 }
-AppClusterService.clusterize(bootstrap);
+AppClusterService.clusterize(
+  parseInt(process.env.NUMBER_OF_WORKER) || 4,
+  bootstrap,
+);
