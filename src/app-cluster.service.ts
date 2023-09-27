@@ -8,7 +8,7 @@ export class AppClusterService {
   static clusterize(callback: Function): void {
     if (cluster.isPrimary) {
       Logger.log(`Master server started on ${process.pid}`);
-      //ensure workers exit cleanly 
+      //ensure workers exit cleanly
       process.on('SIGINT', function () {
         Logger.log('Cluster shutting down...');
         for (var id in cluster.workers) {
