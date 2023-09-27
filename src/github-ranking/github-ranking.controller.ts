@@ -2,15 +2,17 @@ import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
 import { GithubRankingService } from './github-ranking.service';
 import { Utils } from '../util/utils';
 
-/**
- * Input controller
- * language: string
- * limit: number
- *  date: Date
- */
 @Controller('github-ranking')
 export class GithubRankingController {
-  constructor(private readonly githubRankingService: GithubRankingService) {}
+  constructor(private readonly githubRankingService: GithubRankingService) { }
+
+  /**
+   * 
+   * @param language 
+   * @param limit 
+   * @param date 
+   * @returns 
+   */
   @Get()
   async getGithubRanking(
     @Query('language') language: string,
@@ -32,7 +34,13 @@ export class GithubRankingController {
     return { count: finalOutput.length, records: finalOutput };
   }
 
-  validateInput(limit: number, language: string, date: Date) {
+  /**
+   * 
+   * @param limit 
+   * @param language 
+   * @param date 
+   */
+  private validateInput(limit: number, language: string, date: Date) {
     if (!limit || limit < 0) {
       throw new BadRequestException('Limit should be greater than zero');
     }

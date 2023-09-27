@@ -10,8 +10,12 @@ export class GithubRankingService {
   constructor(
     private readonly httpService: HttpService,
     private readonly config: ConfigService,
-  ) {}
-
+  ) { }
+  /**
+   * 
+   * @param date 
+   * @returns 
+   */
   async getGithubRankingData(date: Date): Promise<string> {
     const rankingUrl = this.config
       .get('GITHUB_RANKING_URL')
@@ -19,7 +23,12 @@ export class GithubRankingService {
     const { data } = await this.httpService.axiosRef.get(rankingUrl);
     return data;
   }
-
+  /**
+   * 
+   * @param data 
+   * @param language 
+   * @returns 
+   */
   parseCsv(data: string, language: string): Promise<GithubRanking[]> {
     const csvStream = new Readable();
     csvStream.push(data);

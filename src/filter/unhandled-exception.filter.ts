@@ -10,6 +10,11 @@ import { Request, Response } from 'express';
 
 @Catch()
 export class UnHandledException implements ExceptionFilter {
+  /**
+   * 
+   * @param exception 
+   * @param host 
+   */
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
