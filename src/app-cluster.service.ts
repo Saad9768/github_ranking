@@ -11,7 +11,7 @@ export class AppClusterService {
       //ensure workers exit cleanly
       process.on('SIGINT', function () {
         Logger.log('Cluster shutting down...');
-        for (var id in cluster.workers) {
+        for (const id in cluster.workers) {
           cluster.workers[id].kill();
         }
         // exit the master process
