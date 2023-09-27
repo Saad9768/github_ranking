@@ -124,4 +124,16 @@ describe('GithubRankingController', () => {
       expect(exception.response.message).toEqual('InCorrect Language');
     }
   });
+  it('should return a bad gateway 400 because limit is NaN', async () => {
+    const language = '';
+    const limit = NaN;
+    const date = new Date('2023-01-01');
+    try {
+      await githubRankingController.getGithubRanking(language, limit, date);
+      expect(githubRankingService.getGithubRankingData).toBeCalledTimes(0);
+    } catch (exception) {
+      expect(exception.response.statusCode).toEqual(400);
+      expect(exception.response.message).toEqual('Limit should be greater than zero');
+    }
+  });
 });

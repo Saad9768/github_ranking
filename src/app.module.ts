@@ -12,17 +12,17 @@ import { GithubRankingService } from './github-ranking/github-ranking.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot(
-  //   {
-  //   envFilePath: '.env'
-  // }
-  ), HttpModule],
+  imports: [
+    ConfigModule
+      .forRoot(),
+    HttpModule,
+  ],
   controllers: [AppController, GithubRankingController],
   providers: [
-    //   {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: LoggingInterceptor,
-    // },
+      {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
     //  {
     //   provide: APP_INTERCEPTOR,
     //   useClass: TimeoutInterceptor,

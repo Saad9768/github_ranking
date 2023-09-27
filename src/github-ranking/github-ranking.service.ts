@@ -3,14 +3,14 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import * as csvParser from 'csv-parser';
 import { Readable } from 'stream';
-import { GithubRankingInterface } from 'src/model/github-ranking-interface';
+import { GithubRanking } from 'src/model/github-ranking-interface';
 
 @Injectable()
 export class GithubRankingService {
   constructor(
     private readonly httpService: HttpService,
     private readonly config: ConfigService,
-  ) {}
+  ) { }
 
   async getGithubRankingData(date: Date): Promise<string> {
     const rankingUrl = this.config
@@ -20,17 +20,18 @@ export class GithubRankingService {
     return data;
   }
 
-  parseCsv(data: string, language: string): Promise<GithubRankingInterface[]> {
+  parseCsv(data: string, language: string): Promise<GithubRanking[]> {
     const csvStream = new Readable();
     csvStream.push(data);
     csvStream.push(null);
-    const filteredRepos: GithubRankingInterface[] = [];
+    const filteredRepos: GithubRanking[] = [];
     return new Promise((resolve, reject) => {
       csvStream
         .pipe(csvParser())
-        .on('data', (row: GithubRankingInterface) => {
+        .on('data', (row: GithubRanking) => {
           // Filter by language
           if (row.language.toLowerCase() === language.toLowerCase()) {
+            // change the values to integer
             for (const el of ['rank', 'stars', 'forks', 'issues']) {
               row[el] = !isNaN(row[el]) ? parseInt(row[el]) : row[el];
             }
@@ -44,20 +45,5 @@ export class GithubRankingService {
           reject(error);
         });
     });
-  }
-
-  selectOnlyTopRatedRepo(sortedOutput: GithubRankingInterface[], limit: number) {
-    const topRepo = [];
-    for (const obj of sortedOutput) {
-      if (topRepo.length >= limit) {
-        break;
-      }
-      const { repo_url } = obj;
-      const foundRepo = topRepo.find((r) => r.repo_url === repo_url);
-      if (!foundRepo) {
-        topRepo.push(obj);
-      }
-    }
-    return topRepo;
   }
 }
