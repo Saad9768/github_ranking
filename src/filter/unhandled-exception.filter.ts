@@ -19,10 +19,10 @@ export class UnHandledException implements ExceptionFilter {
       exception instanceof AxiosError
         ? { status: exception.response.status, message: exception.message }
         : exception instanceof HttpException
-          ? { status: exception.getStatus(), message: exception.message }
-          : { status: 500, message: 'Internal Server Error' };
+        ? { status: exception.getStatus(), message: exception.message }
+        : { status: 500, message: 'Internal Server Error' };
 
-    Logger.error(`Exception :: ${message}`)
+    Logger.error(`Exception :: ${message}`);
 
     response.status(status).json({
       statusCode: status,

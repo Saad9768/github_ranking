@@ -13,15 +13,17 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication({
-      logger: false
+      logger: false,
     });
     app.useGlobalFilters(new UnHandledException());
     await app.init();
-
   });
 
-  function validateReply({ statusCode, body: { message, path, statusCode: bodyStatusCode } }) {
-    const { url, message: expectedMessage } = this
+  function validateReply({
+    statusCode,
+    body: { message, path, statusCode: bodyStatusCode },
+  }) {
+    const { url, message: expectedMessage } = this;
     expect(statusCode).toEqual(400);
     expect(message).toEqual(expectedMessage);
     expect(bodyStatusCode).toEqual(400);
@@ -30,82 +32,84 @@ describe('AppController (e2e)', () => {
   }
 
   it('/ (GET)', () => {
-    const outputExpected = 'Welcome to GithubRepo Ranking Service'
+    const outputExpected = 'Welcome to GithubRepo Ranking Service';
     return request(app.getHttpServer())
       .get('/')
       .expect(200)
       .expect(outputExpected);
   });
   it('should return correct records for language, limit and date', () => {
-    const language = 'Javascript'
-    const limit = 2
-    const date = '2018-12-18'
+    const language = 'Javascript';
+    const limit = 2;
+    const date = '2018-12-18';
     const url = `/github-ranking?limit=${limit}&date=${date}&language=${language}`;
     const expectedOutput = {
-      "count": 2,
-      "records": [
+      count: 2,
+      records: [
         {
-          "rank": 1,
-          "item": "top-100-stars",
-          "repo_name": "freeCodeCamp",
-          "stars": 296554,
-          "forks": 20629,
-          "language": "JavaScript",
-          "repo_url": "https://github.com/freeCodeCamp/freeCodeCamp",
-          "username": "freeCodeCamp",
-          "issues": 6572,
-          "last_commit": "2018-12-18T12:16:12Z",
-          "description": "The https://www.freeCodeCamp.org open source codebase and curriculum. Learn to code for free together with millions of people."
+          rank: 1,
+          item: 'top-100-stars',
+          repo_name: 'freeCodeCamp',
+          stars: 296554,
+          forks: 20629,
+          language: 'JavaScript',
+          repo_url: 'https://github.com/freeCodeCamp/freeCodeCamp',
+          username: 'freeCodeCamp',
+          issues: 6572,
+          last_commit: '2018-12-18T12:16:12Z',
+          description:
+            'The https://www.freeCodeCamp.org open source codebase and curriculum. Learn to code for free together with millions of people.',
         },
         {
-          "rank": 2,
-          "item": "JavaScript",
-          "repo_name": "vue",
-          "stars": 122454,
-          "forks": 17507,
-          "language": "JavaScript",
-          "repo_url": "https://github.com/vuejs/vue",
-          "username": "vuejs",
-          "issues": 233,
-          "last_commit": "2018-12-18T07:38:59Z",
-          "description": "🖖 A progressive, incrementally-adoptable JavaScript framework for building UI on the web."
-        }
-      ]
-    }
+          rank: 2,
+          item: 'JavaScript',
+          repo_name: 'vue',
+          stars: 122454,
+          forks: 17507,
+          language: 'JavaScript',
+          repo_url: 'https://github.com/vuejs/vue',
+          username: 'vuejs',
+          issues: 233,
+          last_commit: '2018-12-18T07:38:59Z',
+          description:
+            '🖖 A progressive, incrementally-adoptable JavaScript framework for building UI on the web.',
+        },
+      ],
+    };
     return request(app.getHttpServer())
       .get(url)
       .expect(200)
       .expect(expectedOutput);
   });
   it('should return Bad request as language is not send to endpoint', async () => {
-    const limit = 2
-    const date = '2018-12-18'
+    const limit = 2;
+    const date = '2018-12-18';
     const url = `/github-ranking?limit=${limit}&date=${date}`;
-    const message = 'InCorrect Language'
+    const message = 'InCorrect Language';
     return request(app.getHttpServer())
       .get(url)
       .expect(400)
-      .expect(validateReply.bind({ url, message }))
+      .expect(validateReply.bind({ url, message }));
   });
   it('should return Bad request as date is not send to endpoint', () => {
-    const language = 'Javascript'
-    const limit = 2
+    const language = 'Javascript';
+    const limit = 2;
     const url = `/github-ranking?limit=${limit}&language=${language}`;
-    const message = 'InCorrect Date'
+    const message = 'InCorrect Date';
     return request(app.getHttpServer())
       .get(url)
       .expect(400)
-      .expect(validateReply.bind({ url, message }))
+      .expect(validateReply.bind({ url, message }));
   });
 
   it('should return Bad request as limit is not send to endpoint', () => {
-    const language = 'Javascript'
-    const date = '2018-12-18'
+    const language = 'Javascript';
+    const date = '2018-12-18';
     const url = `/github-ranking?date=${date}&language=${language}`;
-    const message = 'Limit should be greater than zero'
+    const message = 'Limit should be greater than zero';
     return request(app.getHttpServer())
       .get(url)
       .expect(400)
-      .expect(validateReply.bind({ url, message }))
+      .expect(validateReply.bind({ url, message }));
   });
 });

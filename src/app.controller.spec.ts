@@ -16,7 +16,9 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Welcome to GithubRepo Ranking Service"', () => {
-      expect(appController.getHello()).toBe('Welcome to GithubRepo Ranking Service');
+      expect(appController.getHello()).toBe(
+        'Welcome to GithubRepo Ranking Service',
+      );
     });
   });
 });

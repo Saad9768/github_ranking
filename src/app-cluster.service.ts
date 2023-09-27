@@ -1,4 +1,3 @@
-// import cluster from 'cluster';
 const cluster = require('cluster');
 import { cpus } from 'os';
 import { Injectable } from '@nestjs/common';
@@ -12,7 +11,7 @@ export class AppClusterService {
       for (let i = 0; i < numCPUs; i++) {
         cluster.fork();
       }
-      cluster.on('exit', (worker, code, signal) => {
+      cluster.on('exit', (worker) => {
         console.log(`Worker ${worker.process.pid} died. Restarting`);
         cluster.fork();
       });

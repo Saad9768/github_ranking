@@ -133,7 +133,9 @@ describe('GithubRankingController', () => {
       expect(githubRankingService.getGithubRankingData).toBeCalledTimes(0);
     } catch (exception) {
       expect(exception.response.statusCode).toEqual(400);
-      expect(exception.response.message).toEqual('Limit should be greater than zero');
+      expect(exception.response.message).toEqual(
+        'Limit should be greater than zero',
+      );
     }
   });
 });

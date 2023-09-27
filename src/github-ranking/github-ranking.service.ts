@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import * as csvParser from 'csv-parser';
@@ -10,7 +10,7 @@ export class GithubRankingService {
   constructor(
     private readonly httpService: HttpService,
     private readonly config: ConfigService,
-  ) { }
+  ) {}
 
   async getGithubRankingData(date: Date): Promise<string> {
     const rankingUrl = this.config

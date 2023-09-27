@@ -20,10 +20,11 @@ describe('GithubRankingService', () => {
     expect(service).toBeDefined();
   });
   it('should be parsecsvData correctly', async () => {
-    expect(await service.parseCsv(parseCsvDataInput, 'Javascript')).toEqual(parseCsvDataOutput);
+    expect(await service.parseCsv(parseCsvDataInput, 'Javascript')).toEqual(
+      parseCsvDataOutput,
+    );
   });
-  it('should be parsecsvData correctly but return an empty array because typescript is not present in the data',
-    async () => {
-      expect(await service.parseCsv(parseCsvDataInput, 'Typescript')).toEqual([]);
-    });
+  it('should be parsecsvData correctly but return an empty array because typescript is not present in the data', async () => {
+    expect(await service.parseCsv(parseCsvDataInput, 'Typescript')).toEqual([]);
+  });
 });
