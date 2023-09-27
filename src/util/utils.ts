@@ -1,10 +1,10 @@
 export class Utils {
   /**
-   * 
-   * @param data 
-   * @param fKey 
-   * @param sKey 
-   * @returns 
+   *
+   * @param data
+   * @param fKey
+   * @param sKey
+   * @returns
    */
   static sortByKeys<T>(data: T[], fKey: string, sKey: string) {
     return data.sort((x: T, y: T) =>
@@ -12,11 +12,11 @@ export class Utils {
     );
   }
   /**
-   * 
-   * @param data 
-   * @param limit 
-   * @param key 
-   * @returns 
+   *
+   * @param data
+   * @param limit
+   * @param key
+   * @returns
    */
   static removeDuplicateAndLimitByKey<T>(
     data: T[],

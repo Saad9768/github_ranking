@@ -7,9 +7,9 @@ const numCPUs = cpus().length;
 @Injectable()
 export class AppClusterService {
   /**
-   * 
-   * @param initWorker 
-   * @param callback 
+   *
+   * @param initWorker
+   * @param callback
    */
   static clusterize(
     initWorker: number,

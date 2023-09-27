@@ -4,14 +4,14 @@ import { Utils } from '../util/utils';
 
 @Controller('github-ranking')
 export class GithubRankingController {
-  constructor(private readonly githubRankingService: GithubRankingService) { }
+  constructor(private readonly githubRankingService: GithubRankingService) {}
 
   /**
-   * 
-   * @param language 
-   * @param limit 
-   * @param date 
-   * @returns 
+   *
+   * @param language
+   * @param limit
+   * @param date
+   * @returns
    */
   @Get()
   async getGithubRanking(
@@ -35,10 +35,10 @@ export class GithubRankingController {
   }
 
   /**
-   * 
-   * @param limit 
-   * @param language 
-   * @param date 
+   *
+   * @param limit
+   * @param language
+   * @param date
    */
   private validateInput(limit: number, language: string, date: Date) {
     if (!limit || limit < 0) {

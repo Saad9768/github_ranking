@@ -10,11 +10,11 @@ export class GithubRankingService {
   constructor(
     private readonly httpService: HttpService,
     private readonly config: ConfigService,
-  ) { }
+  ) {}
   /**
-   * 
-   * @param date 
-   * @returns 
+   *
+   * @param date
+   * @returns
    */
   async getGithubRankingData(date: Date): Promise<string> {
     const rankingUrl = this.config
@@ -24,10 +24,10 @@ export class GithubRankingService {
     return data;
   }
   /**
-   * 
-   * @param data 
-   * @param language 
-   * @returns 
+   *
+   * @param data
+   * @param language
+   * @returns
    */
   parseCsv(data: string, language: string): Promise<GithubRanking[]> {
     const csvStream = new Readable();
