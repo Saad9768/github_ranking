@@ -19,6 +19,9 @@ RUN npm run lint
 #Run all the test cases
 RUN npm test
 
+#Run all End2End test case, can be removed later and another approach can be considered
+RUN npm run test:e2e
+
 # Creates a "dist" folder with the production build
 RUN npm run build
 
