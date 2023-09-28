@@ -24,7 +24,19 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This repository creates an endpoint which returns top github repositories. 
+Here is how one can call an endpoint
+input parameter mandatory 
+language: string
+limit: number
+date: Date
+On local Service runs on port 3000 which is configurable
+http://localhost:3000/github-ranking?limit=2&date=2018-12-18
+
+.env.development and .env.production file contains config data which can added just before running the application.
+
+
+
 
 ## Installation
 
